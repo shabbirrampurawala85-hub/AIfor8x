@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GoViral AI — Premium AI Content Virality Analyzer</title>
+  <meta name="description" content="Audit your video hooks, analyze viewer retention, optimize captions, and consult our AI Coach to maximize your virality score.">
+  <meta name="application-name" content="GoViral AI">
+  <meta name="keywords" content="content creator tool, virality analyzer, video analytics, hook score, retention checker, AI creator assistant">
+  
+  <!-- Font Imports -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@500;700;800;900&display=swap" rel="stylesheet">
+  
+  <!-- Core stylesheet -->
+  <link rel="stylesheet" href="index.css">
+</head>
+<body>
+  <!-- Header / Navigation -->
+  <header class="app-header">
+    <div class="header-container">
+      <div class="logo-area">
+        <span class="logo-icon">🔥</span>
+        <span class="logo-text">GoViral<span class="highlight">AI</span></span>
+      </div>
+      <div class="nav-actions">
+        <span class="badge live-badge"><span class="pulse-dot"></span>Live Beta</span>
+        <a href="#about" class="nav-link">Features</a>
+        <button id="btn-theme-toggle" class="btn-icon" aria-label="Toggle Theme">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-sun"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main id="main-content">
+    <!-- Hero / Intro Section -->
+    <section class="hero-section">
+      <div class="hero-glow" aria-hidden="true"></div>
+      <div class="container hero-container">
+        <h1 class="hero-title">Predict. Optimize. <span class="gradient-text">Go Viral.</span></h1>
+        <p class="hero-subtitle">Upload your video draft or paste your post script. Our neural analyzer audits your hook, maps potential viewer drop-off, and writes changes to double your reach.</p>
+        
+        <div class="stats-ticker">
+          <div class="ticker-item"><span class="ticker-num">1.2M+</span> Videos Scored</div>
+          <div class="ticker-item"><span class="ticker-num">98.4%</span> Hook Accuracy</div>
+          <div class="ticker-item"><span class="ticker-num">+140%</span> Avg. Reach Gain</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Workspace Panel (Uploader / Text Script Input) -->
+    <section class="workspace-section">
+      <div class="container">
+        <!-- Input Tabs -->
+        <div class="input-tabs" role="tablist">
+          <button id="tab-video" class="tab-btn active" role="tab" aria-selected="true" aria-controls="panel-video">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="tab-icon"><path d="m22 8-6 4 6 4V8Z"/><rect width="14" height="12" x="2" y="6" rx="2" ry="2"/></svg>
+            Analyze Video Draft
+          </button>
+          <button id="tab-text" class="tab-btn" role="tab" aria-selected="false" aria-controls="panel-text">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="tab-icon"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><line x1="10" y1="9" x2="8" y2="9"/></svg>
+            Analyze Text Script / Post
+          </button>
+        </div>
+
+        <!-- Video Upload Panel -->
+        <div id="panel-video" class="tab-panel active" role="tabpanel">
+          <div id="dropzone" class="dropzone">
+            <input type="file" id="video-file-input" accept="video/mp4,video/quicktime,video/x-m4v" class="file-input-hidden" aria-label="Upload Video File">
+            <div class="dropzone-content">
+              <div class="upload-icon-wrapper">
+                <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="upload-icon"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+              </div>
+              <h3 class="upload-title">Drag & Drop your video draft here</h3>
+              <p class="upload-hint">Supports MP4, MOV, or M4V (up to 150MB)</p>
+              <button id="btn-browse-video" class="btn-primary">Browse Files</button>
+            </div>
+            <!-- Uploading/Analyzing Overlay -->
+            <div id="upload-progress" class="upload-progress-overlay">
+              <div class="spinner"></div>
+              <h3 id="progress-status" class="progress-title">Uploading video...</h3>
+              <p id="progress-detail" class="progress-subtitle">Extracting audio track & structural details</p>
+              <div class="progress-bar-container">
+                <div id="progress-bar-fill" class="progress-bar-fill"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Text Input Panel -->
+        <div id="panel-text" class="tab-panel" role="tabpanel">
+          <div class="text-input-wrapper">
+            <textarea id="script-textarea" placeholder="Paste your hook, TikTok script, tweet draft, or video description here..." aria-label="Paste script content"></textarea>
+            <div class="text-input-footer">
+              <div class="word-counter"><span id="char-count">0</span> characters</div>
+              <button id="btn-analyze-text" class="btn-primary btn-glow">
+                Analyze Script
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Dashboard Results View (Initially Hidden/Collapsed) -->
+    <section id="results-dashboard" class="dashboard-section hidden">
+      <div class="container dashboard-container">
+        <!-- Main Stats Strip -->
+        <div class="metrics-grid">
+          <!-- Main Virality Gauge -->
+          <div class="metric-card main-gauge-card">
+            <div class="metric-header">
+              <h3>Virality Score</h3>
+              <span class="tooltip" data-tooltip="Overall probability of this video getting shared and boosted by the algorithm.">ℹ️</span>
+            </div>
+            <div class="gauge-wrapper">
+              <svg class="gauge-svg" viewBox="0 0 100 100">
+                <circle class="gauge-track" cx="50" cy="50" r="40"></circle>
+                <circle id="gauge-fill-virality" class="gauge-fill" cx="50" cy="50" r="40" stroke-dasharray="251.2" stroke-dashoffset="251.2"></circle>
+              </svg>
+              <div class="gauge-text-overlay">
+                <span id="txt-virality-score" class="score-value">0</span>
+                <span class="score-max">/100</span>
+              </div>
+            </div>
+            <div class="gauge-label-status">
+              <span id="lbl-virality-status" class="status-badge gold-glow">Calculating...</span>
+            </div>
+          </div>
+
+          <!-- Hook score card -->
+          <div class="metric-card card-hook">
+            <div class="metric-header">
+              <h3>First 3s Hook Score</h3>
+              <span class="tooltip" data-tooltip="Evaluates initial verbal hook, frame-movement rate, and text-overlay alignment.">ℹ️</span>
+            </div>
+            <div class="score-display">
+              <span id="txt-hook-score" class="score-huge">0</span>
+              <span class="score-max-big">/100</span>
+            </div>
+            <div class="metric-progress-wrapper">
+              <div class="progress-bar-container mini">
+                <div id="progress-fill-hook" class="progress-bar-fill gold"></div>
+              </div>
+            </div>
+            <p id="lbl-hook-feedback" class="metric-desc">Pacing is excellent, but opening text overlay is delayed.</p>
+          </div>
+
+          <!-- Pacing score card -->
+          <div class="metric-card card-pacing">
+            <div class="metric-header">
+              <h3>Retention Stability</h3>
+              <span class="tooltip" data-tooltip="Consistency of scene changes, sound transitions, and pattern interrupts.">ℹ️</span>
+            </div>
+            <div class="score-display">
+              <span id="txt-pacing-score" class="score-huge">0</span>
+              <span class="score-max-big">/100</span>
+            </div>
+            <div class="metric-progress-wrapper">
+              <div class="progress-bar-container mini">
+                <div id="progress-fill-pacing" class="progress-bar-fill cyan"></div>
+              </div>
+            </div>
+            <p id="lbl-pacing-feedback" class="metric-desc">Slight mid-video lull detected around 12 seconds.</p>
+          </div>
+        </div>
+
+        <!-- Dashboard Layout columns -->
+        <div class="dashboard-columns">
+          
+          <!-- Left Column: Visual Analysis & Graphs -->
+          <div class="dashboard-col left-col">
+            
+            <!-- Retention Curve Graph Card -->
+            <div class="dashboard-card graph-card">
+              <div class="card-header">
+                <h3 class="card-title">Projected Audience Retention</h3>
+                <div class="graph-legend">
+                  <span class="legend-item"><span class="legend-color your-video"></span>Your Video</span>
+                  <span class="legend-item"><span class="legend-color benchmark"></span>Viral Benchmark</span>
+                </div>
+              </div>
+              <div class="graph-wrapper-outer">
+                <!-- SVG chart container -->
+                <div class="svg-container" id="svg-chart-container">
+                  <!-- Generated dynamically in visualizer.js -->
+                </div>
+              </div>
+              <div class="graph-notes">
+                <div class="alert-box warning-alert">
+                  <span class="alert-icon">⚠️</span>
+                  <div class="alert-content">
+                    <strong>Critical Dropoff Alert:</strong> 42% of viewers are predicted to drop at <span class="highlight">0:12</span> due to a 3-second scene with no audio transition.
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Hook Variations & Captions Card -->
+            <div class="dashboard-card optimization-card">
+              <div class="card-header">
+                <h3 class="card-title">AI Copywriting Suite</h3>
+              </div>
+              <div class="opt-tabs">
+                <button id="opt-tab-hooks" class="opt-tab-btn active">Alternate Hooks</button>
+                <button id="opt-tab-captions" class="opt-tab-btn">Captions & SEO</button>
+              </div>
+              <!-- Hooks Subpanel -->
+              <div id="opt-panel-hooks" class="opt-panel active">
+                <div class="hooks-list">
+                  <div class="hook-item">
+                    <div class="hook-meta">
+                      <span class="hook-tag curiosity">Curiosity Hook (+18% engagement)</span>
+                      <button class="btn-copy" data-copy="curiosity-hook-text">Copy</button>
+                    </div>
+                    <p id="curiosity-hook-text" class="hook-text">"99% of creators miss this exact setting, and it's killing their reach..."</p>
+                  </div>
+                  <div class="hook-item">
+                    <div class="hook-meta">
+                      <span class="hook-tag negative">Negative Frame Hook (+22% retention)</span>
+                      <button class="btn-copy" data-copy="negative-hook-text">Copy</button>
+                    </div>
+                    <p id="negative-hook-text" class="hook-text">"Stop posting TikToks like this if you want to gain followers in 2026."</p>
+                  </div>
+                  <div class="hook-item">
+                    <div class="hook-meta">
+                      <span class="hook-tag authority">Authority Hook (+15% trust)</span>
+                      <button class="btn-copy" data-copy="authority-hook-text">Copy</button>
+                    </div>
+                    <p id="authority-hook-text" class="hook-text">"After getting 10 million views last month, I realized this one setting does everything."</p>
+                  </div>
+                </div>
+              </div>
+              <!-- Captions Subpanel -->
+              <div id="opt-panel-captions" class="opt-panel">
+                <div class="captions-container">
+                  <div class="caption-block">
+                    <label>Viral Caption Proposal</label>
+                    <div class="caption-text-box">
+                      <p id="caption-proposal-text">If you want your videos to hit the algorithm, try this. This settings hack literally changes everything 📈
+
+Save this video for later so you don't forget!
+
+#contentcreator #viraltips #editinghacks #creatoryourway #videotutorial #growthmarketing</p>
+                      <button class="btn-copy absolute-copy" data-copy="caption-proposal-text">Copy Caption</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Right Column: Fix-it checklist & AI Coach -->
+          <div class="dashboard-col right-col">
+            
+            <!-- Checklist Card -->
+            <div class="dashboard-card checklist-card">
+              <div class="card-header border-bottom">
+                <h3 class="card-title">Actionable Fix Checklist</h3>
+                <span class="badge gold-badge font-sm">Score Recalculates Live</span>
+              </div>
+              <div class="checklist-items">
+                <div class="checklist-item priority-high">
+                  <label class="checkbox-container">
+                    <input type="checkbox" id="fix-hook-overlay" class="fix-checkbox" data-score-bonus="8">
+                    <span class="checkmark"></span>
+                    <div class="checklist-content">
+                      <span class="badge-priority high">High Priority</span>
+                      <h4>Add Text Overlay to Hook</h4>
+                      <p>Add glowing caption or bold text header within the first 0.5s of the video to grab attention.</p>
+                      <span class="score-bonus">+8 pts potential</span>
+                    </div>
+                  </label>
+                </div>
+                
+                <div class="checklist-item priority-high">
+                  <label class="checkbox-container">
+                    <input type="checkbox" id="fix-pacing-cut" class="fix-checkbox" data-score-bonus="12">
+                    <span class="checkmark"></span>
+                    <div class="checklist-content">
+                      <span class="badge-priority high">High Priority</span>
+                      <h4>Cut the 3-second silence at 0:12</h4>
+                      <p>There is a pacing gap where no audio/motion occurs. Trim this clip to maintain rapid pacing.</p>
+                      <span class="score-bonus">+12 pts potential</span>
+                    </div>
+                  </label>
+                </div>
+
+                <div class="checklist-item priority-med">
+                  <label class="checkbox-container">
+                    <input type="checkbox" id="fix-music-boost" class="fix-checkbox" data-score-bonus="5">
+                    <span class="checkmark"></span>
+                    <div class="checklist-content">
+                      <span class="badge-priority med">Medium Priority</span>
+                      <h4>Boost background track volume</h4>
+                      <p>Increase background music gain by +3dB during transitions to act as a pattern interrupt.</p>
+                      <span class="score-bonus">+5 pts potential</span>
+                    </div>
+                  </label>
+                </div>
+
+                <div class="checklist-item priority-low">
+                  <label class="checkbox-container">
+                    <input type="checkbox" id="fix-cta-end" class="fix-checkbox" data-score-bonus="3">
+                    <span class="checkmark"></span>
+                    <div class="checklist-content">
+                      <span class="badge-priority low">Low Priority</span>
+                      <h4>Add a micro CTA at the end</h4>
+                      <p>End the video with a 1-second clean directive (e.g. 'Tap follow for part 2') rather than just cutting off.</p>
+                      <span class="score-bonus">+3 pts potential</span>
+                    </div>
+                  </label>
+                </div>
+              </div>
+            </div>
+
+            <!-- Interactive AI Coach Chat -->
+            <div class="dashboard-card chat-card">
+              <div class="card-header border-bottom">
+                <div class="coach-profile">
+                  <span class="coach-avatar">⚡</span>
+                  <div>
+                    <h3 class="card-title">AI Creator Coach</h3>
+                    <span class="coach-status">Active Strategy Advisor</span>
+                  </div>
+                </div>
+              </div>
+              <div class="chat-messages-container" id="chat-messages">
+                <div class="chat-message system">
+                  <p>Welcome! I've analyzed your content structure. Click any quick query below or type your question to refine your script or pacing.</p>
+                </div>
+              </div>
+              <div class="chat-suggestions">
+                <button class="btn-suggestion" id="sugg-pacing">How do I fix the pacing gap?</button>
+                <button class="btn-suggestion" id="sugg-rewrite">Write a better curiosity hook</button>
+                <button class="btn-suggestion" id="sugg-tiktok">Adapt this script for TikTok algorithm</button>
+              </div>
+              <div class="chat-input-area">
+                <input type="text" id="chat-input-text" placeholder="Ask AI Coach..." aria-label="Chat input message">
+                <button id="btn-send-message" class="btn-icon-send" aria-label="Send Message">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-send"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+                </button>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="app-footer">
+    <div class="footer-container">
+      <p>&copy; 2026 GoViral AI. Designed for the 8x Engineer Talent Contest.</p>
+      <div class="footer-links">
+        <a href="#rules" class="footer-link">Challenge Guidelines</a>
+        <a href="#about" class="footer-link">AI Model Info</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- App control logic -->
+  <script src="components/visualizer.js"></script>
+  <script src="components/analyzer.js"></script>
+  <script src="components/chat.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
